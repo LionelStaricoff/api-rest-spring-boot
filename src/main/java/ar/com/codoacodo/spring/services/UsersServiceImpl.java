@@ -17,6 +17,7 @@ public class UsersServiceImpl implements UsersService{
 	@Autowired
 	private UserRepository userRepository;
 	
+	//abre la coneccion con la db
 	public Optional<Users> obtenerPorId(Long id) {
 		return this.userRepository.findById(id);
 	}

@@ -1,43 +1,61 @@
 package ar.com.codoacodo.spring.controllers;
 
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.Date;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import ar.com.codoacodo.spring.domain.Users;
-import ar.com.codoacodo.spring.dtos.UsersDTO;
-import ar.com.codoacodo.spring.services.UsersService;
+import ar.cododacodo.spring.domain.Cupones;
+import ar.cododacodo.spring.domain.EstadoOrdenes;
+import ar.cododacodo.spring.domain.Ordenes;
+import ar.cododacodo.spring.domain.Socios;
+import ar.com.codoacodo.spring.dtos.OrdenDTO;
+import ar.com.codoacodo.spring.services.OrdenService;
 
 @RestController
 public class OrdenResource {
-
-	//userservice
 	@Autowired
-	private UsersService service;
+	private OrdenService ordenService;
 	
-	@GetMapping("/orden/user")
-	public UsersDTO user() {		
-		
-		Optional<Users> users =  this.service.obtenerPorId(1l);
-		
-		UsersDTO dto = null;
-		if(!users.isEmpty()) {
-			
-			Set<String> rolesStrs = users.get().getRoles()
-					.stream()
-					.map(r -> "ROLE_"+r.getRole())
-					.collect(Collectors.toSet());
-			
-			dto = UsersDTO.builder()
-					.username(users.get().getUsername())
-					.roles(rolesStrs)
-					.build();			
-		}
-		return dto;
+    //post a localhost:8080/orden
+    // request un archivo json
+	/*{
+	 *  id:
+		titulos:
+		precio:
+		sociosId
+		estadoOrdenId
+		montoTotal:
+		cuponesId:
 	}
-}
+	*/
+	//si quiero crear
+	@PostMapping(value="/orden")
+	public ResponseEntity <Ordenes> post(
+			@Valid
+			@RequestBody OrdenDTO ordenDto
+			) {
+		Ordenes ordenDb;
+		if(ordenDto.getId() == null){
+			ordenDb =Ordenes.builder()
+			.montoTotal(ordenDto.getMontoTotal())
+			.socio(Socios.builder().id(ordenDto.getSocioId()).build())
+			.estado(EstadoOrdenes.builder().id(ordenDto.getSocioId()).build())
+			.cupon(ordenDto.getCuporId() != null ? Cupones.builder().id(ordenDto.getSocioId()).build() : null)
+			.fechaCreacion(new Date())  // ahora se esta crreando
+			.build();
+			this.ordenService.save(ordenDb);
+		}
+		ordenDb = this.ordenService.getById(ordenDto.getId());
+		
+		return ResponseEntity.ok(ordenDb);
+		
+	}
+	
+	}
+
