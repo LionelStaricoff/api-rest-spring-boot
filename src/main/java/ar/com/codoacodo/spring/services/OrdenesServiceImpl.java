@@ -5,7 +5,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ar.cododacodo.spring.domain.Ordenes;
+import ar.com.codoacodo.spring.domain.Ordenes;
 import ar.com.codoacodo.spring.repository.OrdenesRepository;
 
 @Service

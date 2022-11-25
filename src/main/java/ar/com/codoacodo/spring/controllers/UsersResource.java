@@ -16,11 +16,11 @@ import ar.com.codoacodo.spring.dtos.UsersDTO;
 import ar.com.codoacodo.spring.services.UsersService;
 
 @RestController
-public class UsersResourse {
+public class UsersResource {
 	
 	//inyectamos el servicio de usuario
 	@Autowired
-	private UsersService usersService;
+	private UsersService userService;
 	
 	@GetMapping(value="/users/{id}")
 	public UsersDTO get(
@@ -29,7 +29,7 @@ public class UsersResourse {
 			) {
 		
 		
-	Optional<Users> users =  this.usersService.obtenerPorId(id);
+	Optional<Users> users =  this.userService.obtenerPorId(id);
 		
 		UsersDTO dto = null;
 		if(!users.isEmpty()) {

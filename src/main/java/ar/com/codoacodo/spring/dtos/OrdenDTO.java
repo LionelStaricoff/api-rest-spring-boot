@@ -13,6 +13,6 @@ public class OrdenDTO {
 	private Long socioId;
 	private Long estadoId;
 	private Float montoTotal;
-	private Long cuporId;
+	private Long cuponId;
 
 }
