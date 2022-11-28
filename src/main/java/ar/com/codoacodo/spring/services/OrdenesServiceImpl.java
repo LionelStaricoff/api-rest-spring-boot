@@ -13,11 +13,17 @@ import ar.com.codoacodo.spring.repository.OrdenesRepository;
 public class OrdenesServiceImpl implements OrdenService {
 	@Autowired
 	private OrdenesRepository repository;
-
+/*
 	@Override
 	public Ordenes save(Ordenes entity) {
 		// TODO Auto-generated method stub
 		return this.repository.save(entity);
+	}
+	*/
+	@Override
+	public Ordenes save(Ordenes ordenDb) {
+		// TODO Auto-generated method stub
+		return this.repository.save(ordenDb);
 	}
 
 	@Override

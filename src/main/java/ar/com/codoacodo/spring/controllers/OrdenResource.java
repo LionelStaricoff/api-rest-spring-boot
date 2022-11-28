@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,6 +22,7 @@ import ar.com.codoacodo.spring.domain.Ordenes;
 import ar.com.codoacodo.spring.domain.Socios;
 import ar.com.codoacodo.spring.dtos.OrdenDTO;
 import ar.com.codoacodo.spring.services.OrdenService;
+import lombok.Delegate;
 
 @RestController
 public class OrdenResource {
@@ -59,12 +61,32 @@ public class OrdenResource {
 			.cupon(ordenDto.getCuponId() != null ? Cupones.builder().id(ordenDto.getCuponId()).build() : null)
 			.fechaCreacion(new Date())  // ahora se esta crreando
 			.build();
-			this.ordenService.save(ordenDb);
+			ordenDb = this.ordenService.save(ordenDb);
 			
+			/*
+			 creando objeto json incompleto porque no existe el id{
+  
+     
+     "socioId": 1,
+     "estadoId": 1,
+     "montoTotal": 1500
+    
+}
+			 */
 		
 			
-		}
+		}else {
+	
+			ordenDb = this.ordenService.getById(ordenDto.getId());
 		/*
+		 id objeto ya existe json completo {
+  
+     "id":5,
+     "socioId": 1,
+     "estadoId": 1,
+     "montoTotal": 1500
+    
+}
 		ordenDb.setId(ordenDto.getId());
 		ordenDb.setMontoTotal(ordenDto.getMontoTotal());
 		ordenDb.setSocio(Socios.builder().id(ordenDto.getSocioId()).build() );
@@ -72,13 +94,14 @@ public class OrdenResource {
 		ordenDb.setCupon(Cupones.builder().id(ordenDto.getCuponId()).build());
 		ordenDb.setFechaCreacion(new Date());
 		*/
-		
+		}
 		//ordenDb.setSocio(ordenDto.getSocioId());
 		// no devuelve el objeto completo video 25  minuto 47
 		//return ResponseEntity.status(HttpStatus.CREATED).body(ordenDb);
-		Ordenes aux = this.ordenService.getById(ordenDb.getId());
-		//return ResponseEntity.status(HttpStatus.CREATED).body(aux);
-	    return ResponseEntity.ok(aux);
+	
+		ordenDb = this.ordenService.getById(ordenDb.getId());
+		//return ResponseEntity.status(HttpStatus.CREATED).body(ordenDb);
+	   return ResponseEntity.ok(ordenDb);
 	    //return ResponseEntity.status(HttpStatus.CONFLICT).body(ordenDB);
 		
 	}
@@ -140,6 +163,9 @@ public class OrdenResource {
 		//post: 200 ok
 		return ResponseEntity.ok(orden);
 	}
+	
+	@DeleteMapping("/orden/borrar/{id}")
+	public Respone
 	
 	}
 
