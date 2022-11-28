@@ -37,6 +37,7 @@ public class Ordenes {
 	private Date fechaCreacion;
 	
 	//relacion muchas a uno
+	
 	@ManyToOne
 	@JoinColumn(name = "socios_id", referencedColumnName = "id")
 	private Socios socio;
@@ -51,4 +52,14 @@ public class Ordenes {
 	@ManyToOne
 	@JoinColumn(name = "cupones_id", referencedColumnName = "id",nullable = true)
 	private Cupones cupon;
+
+	public boolean isEstadoFinal() {
+		// esto puede estar en un enum de estados
+		return getEstado().getEstadoFinal().equals(1);
+	}
+
+	public boolean isMontoNull() {
+		
+		return getMontoTotal().equals(null);
+	}
 }

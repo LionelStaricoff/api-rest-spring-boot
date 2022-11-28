@@ -26,4 +26,10 @@ public class OrdenesServiceImpl implements OrdenService {
 		return this.repository.findById(id).orElse(Ordenes.builder().build());
 	}
 
+	@Override
+	public void update(Ordenes ordenDB) {
+		this.repository.save(ordenDB);
+		
+	}
+
 }
