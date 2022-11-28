@@ -13,6 +13,8 @@ import javax.persistence.Table;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -53,6 +55,8 @@ public class Ordenes {
 	@JoinColumn(name = "cupones_id", referencedColumnName = "id",nullable = true)
 	private Cupones cupon;
 
+	//le indicamos a lalibreria json que no lo tenga en cuenta en sus respuestas
+	@JsonIgnore
 	public boolean isEstadoFinal() {
 		// esto puede estar en un enum de estados
 		return getEstado().getEstadoFinal().equals(1);

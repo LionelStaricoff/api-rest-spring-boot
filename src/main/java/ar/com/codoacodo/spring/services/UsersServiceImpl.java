@@ -21,4 +21,10 @@ public class UsersServiceImpl implements UsersService{
 	public Optional<Users> obtenerPorId(Long id) {
 		return this.userRepository.findById(id);
 	}
+
+	@Override
+	public Users findByName(String name) {
+		
+		return this.userRepository.findByUsername(name);
+	}
 }

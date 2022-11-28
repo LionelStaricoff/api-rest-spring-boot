@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -123,6 +124,21 @@ public class OrdenResource {
 		this.ordenService.update(ordenDB);
 		//tira un error EstadoOrdenes.getEstadoFinal()\" is null
 		return ResponseEntity.ok(ordenDB);
+	}
+	
+	
+	@GetMapping("/orden/{id}")
+		public ResponseEntity<Ordenes> get(
+				@PathVariable(name = "id", required = true)
+				Long id
+				){
+		Ordenes orden = this.ordenService.getById(id);
+		if (orden == null || orden.getId() == null) {
+			//not found 404
+			return ResponseEntity.notFound().build();
+		}
+		//post: 200 ok
+		return ResponseEntity.ok(orden);
 	}
 	
 	}
