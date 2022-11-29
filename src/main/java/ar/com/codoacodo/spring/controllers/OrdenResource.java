@@ -4,6 +4,9 @@ import java.util.Date;
 import java.util.HashMap;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,7 +25,6 @@ import ar.com.codoacodo.spring.domain.Ordenes;
 import ar.com.codoacodo.spring.domain.Socios;
 import ar.com.codoacodo.spring.dtos.OrdenDTO;
 import ar.com.codoacodo.spring.services.OrdenService;
-import lombok.Delegate;
 
 @RestController
 public class OrdenResource {
@@ -164,8 +166,28 @@ public class OrdenResource {
 		return ResponseEntity.ok(orden);
 	}
 	
-	@DeleteMapping("/orden/borrar/{id}")
-	public Respone
+	// minuto 59 video 26
 	
+	@DeleteMapping("/orden/{id}")
+	public ResponseEntity<?> delete(
+			 @PathVariable(name = "id", required = true)
+			Long id 
+			){
+		
+		
+		// controlando la exception si el objeto no existe
+		try {
+		this.ordenService.eliminar(id);
+		}catch(RuntimeException re) {
+			
+			System.out.println(re.getMessage());
+		
+		}
+		var res = new HashMap<String, String>();
+		res.put("code", "200");
+		res.put("msj", "ORDEN ELIMINADA");
+		//return ResponseEntity.ok(res);
+		return ResponseEntity.status(HttpStatus.CREATED).body(res);
+	}
 	}
 

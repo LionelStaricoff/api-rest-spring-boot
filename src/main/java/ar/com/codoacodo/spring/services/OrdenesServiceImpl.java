@@ -38,4 +38,10 @@ public class OrdenesServiceImpl implements OrdenService {
 		
 	}
 
+	@Override
+	public void eliminar(Long id) {
+		this.repository.deleteById(id);
+		
+	}
+
 }
