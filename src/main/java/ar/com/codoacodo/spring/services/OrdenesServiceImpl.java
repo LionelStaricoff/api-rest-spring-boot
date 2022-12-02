@@ -43,5 +43,9 @@ public class OrdenesServiceImpl implements OrdenService {
 		this.repository.deleteById(id);
 		
 	}
+	@Override
+	public Ordenes getBySocioId(Long socioId) {
+		return this.repository.findById(socioId).orElse(Ordenes.builder().build());
+	}
 
 }

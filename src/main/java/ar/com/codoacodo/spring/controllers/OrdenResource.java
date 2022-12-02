@@ -8,15 +8,19 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 
+import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import ar.com.codoacodo.spring.domain.Cupones;
@@ -63,7 +67,8 @@ public class OrdenResource {
 			.cupon(ordenDto.getCuponId() != null ? Cupones.builder().id(ordenDto.getCuponId()).build() : null)
 			.fechaCreacion(new Date())  // ahora se esta crreando
 			.build();
-			ordenDb = this.ordenService.save(ordenDb);
+			 this.ordenService.save(ordenDb);
+			
 			
 			/*
 			 creando objeto json incompleto porque no existe el id{
@@ -89,25 +94,21 @@ public class OrdenResource {
      "montoTotal": 1500
     
 }
-		ordenDb.setId(ordenDto.getId());
-		ordenDb.setMontoTotal(ordenDto.getMontoTotal());
-		ordenDb.setSocio(Socios.builder().id(ordenDto.getSocioId()).build() );
-		ordenDb.setEstado(EstadoOrdenes.builder().id(ordenDto.getEstadoId()).build() );
-		ordenDb.setCupon(Cupones.builder().id(ordenDto.getCuponId()).build());
-		ordenDb.setFechaCreacion(new Date());
+		
 		*/
 		}
-		//ordenDb.setSocio(ordenDto.getSocioId());
-		// no devuelve el objeto completo video 25  minuto 47
-		//return ResponseEntity.status(HttpStatus.CREATED).body(ordenDb);
-	
-		ordenDb = this.ordenService.getById(ordenDb.getId());
-		//return ResponseEntity.status(HttpStatus.CREATED).body(ordenDb);
-	   return ResponseEntity.ok(ordenDb);
-	    //return ResponseEntity.status(HttpStatus.CONFLICT).body(ordenDB);
+	      
+		//carga el id de la orden
+	      ordenDb = this.ordenService.getBySocioId(ordenDb.getId() ) ;
+	     if(ordenDb == null) ordenDb = this.ordenService.getById(ordenDto.getId());
+	      ordenDb = this.ordenService.getById(ordenDb.getId());
+		return ResponseEntity.status(HttpStatus.CREATED).body(ordenDb);
+	    //return ResponseEntity.ok(ordenDb);
+	    //return ResponseEntity.status(HttpStatus.CONFLICT).body(ordenDb);
 		
 	}
 	
+	//actualizar registros
 	@PutMapping(value= "/orden/{id}")
 	public ResponseEntity<?> put(
 			@PathVariable(name="id", required=true)
@@ -145,6 +146,20 @@ public class OrdenResource {
 		Ordenes nuevaOrden = Ordenes.builder().montoTotal(ordenDto.getMontoTotal()).build();
 		ordenDB.setMontoTotal(nuevaOrden.getMontoTotal());
 		}
+		
+		
+		
+		
+		
+		
+		//cambiar fecha creacions y crear y cambiar cupones
+		
+		
+		
+		
+		
+		
+		
 		
 		this.ordenService.update(ordenDB);
 		//tira un error EstadoOrdenes.getEstadoFinal()\" is null

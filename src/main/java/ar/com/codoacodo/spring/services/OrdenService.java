@@ -11,4 +11,6 @@ public interface OrdenService {
 
 	public void eliminar(Long id);
 
+	public Ordenes getBySocioId(Long socioId);
+
 }
