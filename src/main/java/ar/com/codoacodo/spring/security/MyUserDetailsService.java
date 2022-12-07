@@ -1,5 +1,6 @@
 package ar.com.codoacodo.spring.security;
 
+import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -20,7 +21,7 @@ public class MyUserDetailsService implements UserDetailsService {
 	private UsersService usersService;
 	
 	@Override
-	public org.springframework.security.core.userdetails.UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 			
 		//si servicio de acceso a la base
 		Users users = this.usersService.findByName(username);

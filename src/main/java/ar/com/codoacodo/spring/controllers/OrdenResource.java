@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.ClientHttpResponse;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -51,6 +52,8 @@ public class OrdenResource {
 	}
 	*/
 	//si quiero crear ordenes
+	//autorizando al usuario ADMIN a realizar ordenes
+	@PreAuthorize("hasAuthority('ADMIN')")
 	@PostMapping(value="/orden")
 	public ResponseEntity <Ordenes> post(
 			 
