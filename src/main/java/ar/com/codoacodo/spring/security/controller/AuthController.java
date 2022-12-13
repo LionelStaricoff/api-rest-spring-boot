@@ -24,7 +24,7 @@ public class AuthController {
 	private JwtProvider jwtProvider;
 	
 	@PostMapping(value="/auth/login", consumes = "application/json", produces = "application/json")
-	public ResponseEntity <String> login(
+	public ResponseEntity <LoginResponseDto> login(
 		@Valid	@RequestBody LoginRequestDto loginReqDto
 			){
 		
@@ -35,7 +35,7 @@ public class AuthController {
 		
 		String jwtToken = this.jwtProvider.generateToken(authentication);
 		
-		return ResponseEntity.ok(jwtToken);
+		return ResponseEntity.ok(new LoginResponseDto(jwtToken));
 		
 	}
 	

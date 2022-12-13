@@ -55,9 +55,10 @@ public class MainSecurity extends WebSecurityConfigurerAdapter{
 		//configurando permiso de peticion 
 		http
 		.csrf().disable()
-		.authorizeHttpRequests()
+		.authorizeRequests()
 		.antMatchers(HttpMethod.GET,"/").permitAll() //permite que pasen las peticiones por get directo del root a la base sin autenticar
 		.antMatchers(new String[]{"/auth/**","/orden/"}).permitAll()
+		.antMatchers("/v2/api-docs","/configuration/**","/swagger*/**","/webjar/**").permitAll()
 		.anyRequest().authenticated()
 		.and()
 		//exception handler > error
