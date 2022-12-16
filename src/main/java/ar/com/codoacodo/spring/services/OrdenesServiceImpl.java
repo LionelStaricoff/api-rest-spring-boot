@@ -1,9 +1,12 @@
 package ar.com.codoacodo.spring.services;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 
 import ar.com.codoacodo.spring.domain.Ordenes;
 import ar.com.codoacodo.spring.repository.OrdenesRepository;
@@ -46,6 +49,12 @@ public class OrdenesServiceImpl implements OrdenService {
 	@Override
 	public Ordenes getBySocioId(Long socioId) {
 		return this.repository.findById(socioId).orElse(Ordenes.builder().build());
+	}
+
+	@Override
+	public List<Ordenes> findAll() {
+		// TODO Auto-generated method stub
+		return this.repository.findAll();
 	}
 
 }

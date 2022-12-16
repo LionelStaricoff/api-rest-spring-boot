@@ -1,5 +1,8 @@
 package ar.com.codoacodo.spring.services;
 
+
+import java.util.List;
+
 import ar.com.codoacodo.spring.domain.Ordenes;
 
 public interface OrdenService {
@@ -12,5 +15,7 @@ public interface OrdenService {
 	public void eliminar(Long id);
 
 	public Ordenes getBySocioId(Long socioId);
+
+	public List<Ordenes> findAll();
 
 }
