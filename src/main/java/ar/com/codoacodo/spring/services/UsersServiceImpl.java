@@ -27,4 +27,33 @@ public class UsersServiceImpl implements UsersService{
 		
 		return this.userRepository.findByUsername(name);
 	}
+
+
+
+	
+
+	@Override
+	public Users save(Optional<Users> usersDB) {
+		// TODO Auto-generated method stub
+		return this.userRepository.save(usersDB);
+	}
+
+	@Override
+	public Users obtenerUsersPorId(Long id) {
+		Optional<Users> ou = this.userRepository.findById(id);
+		Users u = Users.builder().id(ou.get().getId())
+				.password(ou.get().getPassword())
+				.username(ou.get().getUsername())
+				.roles(ou.get().getRoles())
+				.build();
+				
+		 return u;
+	}
+
+	@Override
+	public Users save(Users usersDB) {
+		return this.userRepository.save(usersDB);
+	}
+
+
 }

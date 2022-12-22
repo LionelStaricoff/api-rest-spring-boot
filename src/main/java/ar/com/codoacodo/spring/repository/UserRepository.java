@@ -1,5 +1,7 @@
 package ar.com.codoacodo.spring.repository;
 
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -15,6 +17,8 @@ public interface UserRepository extends JpaRepository<Users, Long>{
 	//named method
 	//select * from users where nombre = 'jose';
 	public Users findByUsername(String name);
+
+	public Users save(Optional<Users> usersDB);
 	
 	
 	//public Users findByUserNameAndLastname(String name);
