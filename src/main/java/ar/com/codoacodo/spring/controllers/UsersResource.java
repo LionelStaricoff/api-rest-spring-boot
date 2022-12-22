@@ -84,7 +84,7 @@ public class UsersResource {
 			usersDB =Users.builder()
 					.username(usersDTO.getUsername())
 					.password(crearPassword(usersDTO.getPassword()) )
-					//.roles(Roles.builder().id(usersDTO.getId()).build())       //convertir(usersDTO.getRoles()   ) )        
+					.roles( new Set<Roles> (Roles.builder().id(usersDTO.getId()).build())  )     //convertir(usersDTO.getRoles()   ) )        
 			        .build() ;
 					
 		
