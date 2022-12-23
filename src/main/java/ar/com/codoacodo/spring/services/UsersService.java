@@ -1,5 +1,6 @@
 package ar.com.codoacodo.spring.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import ar.com.codoacodo.spring.domain.Users;
@@ -14,6 +15,10 @@ public interface UsersService {
 	public Users save(Users usersDB);
 
 	Users save(Optional<Users> usersDB);
+
+	public void eliminar(Long id);
+
+	public List<Users> findAll();
 
 	
 

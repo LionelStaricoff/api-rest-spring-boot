@@ -2,7 +2,6 @@ package ar.com.codoacodo.spring.domain;
 
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -48,6 +47,3 @@ public class Users {
 	)
 	private Set<Roles> roles;
 }
-
-//ids for this class must be manually assigned before calling save(): ar.com.codoacodo.spring.domain.Roles; nested exception is org.hibernate.id.IdentifierGenerationException: ids for this class must be manually assigned before calling save(): ar.com.codoacodo.spring.domain.Roles
-//object references an unsaved transient instance - save the transient instance before flushing

@@ -1,5 +1,6 @@
 package ar.com.codoacodo.spring.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +54,18 @@ public class UsersServiceImpl implements UsersService{
 	@Override
 	public Users save(Users usersDB) {
 		return this.userRepository.save(usersDB);
+	}
+
+	@Override
+	public void eliminar(Long id) {
+		this.userRepository.deleteById(id);
+		
+	}
+
+	@Override
+	public List<Users> findAll() {
+		
+		return this.userRepository.findAll();
 	}
 
 

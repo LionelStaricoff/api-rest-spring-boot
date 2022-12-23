@@ -162,6 +162,8 @@ public class OrdenResource {
 	}
 	
 	
+	
+	//obtener orden
 	@GetMapping("/orden/{id}")
 		public ResponseEntity<Ordenes> get(
 				@PathVariable(name = "id", required = true)
