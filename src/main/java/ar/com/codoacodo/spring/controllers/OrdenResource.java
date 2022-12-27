@@ -94,9 +94,7 @@ public class OrdenResource {
 		}
 	      
 		//carga el id de la orden
-	      ordenDb = this.ordenService.getBySocioId(ordenDb.getId() ) ;
-	     if(ordenDb == null) ordenDb = this.ordenService.getById(ordenDto.getId());
-	      ordenDb = this.ordenService.getById(ordenDb.getId());
+	    
 		return ResponseEntity.status(HttpStatus.CREATED).body(ordenDb);
 	    //return ResponseEntity.ok(ordenDb);
 	    //return ResponseEntity.status(HttpStatus.CONFLICT).body(ordenDb);

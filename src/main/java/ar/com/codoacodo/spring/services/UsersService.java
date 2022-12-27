@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import ar.com.codoacodo.spring.domain.Users;
+import ar.com.codoacodo.spring.dtos.UsersDTO;
 
 public interface UsersService {
 	public Optional<Users> obtenerPorId(Long id);
@@ -19,6 +20,10 @@ public interface UsersService {
 	public void eliminar(Long id);
 
 	public List<Users> findAll();
+
+	public void update(Users usersDB);
+
+	Users save(Users usersDB, UsersDTO usersDTO);
 
 	
 

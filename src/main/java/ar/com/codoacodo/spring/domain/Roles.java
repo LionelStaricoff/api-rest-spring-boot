@@ -27,4 +27,11 @@ public class Roles {
 	
 	@Column(name = "role",length = 50,nullable = false,unique = true)
 	private String role;
+	
+	
+	public Roles agregarRoles (Long id,String role) {
+
+		Roles r = new Roles(id, role);
+		return r;
+	}
 }

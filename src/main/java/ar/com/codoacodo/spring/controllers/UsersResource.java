@@ -1,11 +1,13 @@
 package ar.com.codoacodo.spring.controllers;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -21,7 +23,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import ar.com.codoacodo.spring.domain.Ordenes;
 import ar.com.codoacodo.spring.domain.Roles;
 import ar.com.codoacodo.spring.domain.Users;
 import ar.com.codoacodo.spring.dtos.UsersDTO;
@@ -29,6 +30,10 @@ import ar.com.codoacodo.spring.services.UsersService;
 
 @RestController
 public class UsersResource {
+	/*
+	List<Roles> roles =
+            Stream.of(new Roles(1l, "guess"),
+            		new Roles(1l, "guess")).collect(Collectors.toList()); */
 	
 	//inyectamos el servicio de usuario
 	@Autowired
@@ -78,19 +83,22 @@ public class UsersResource {
 			//@Valid
 			@RequestBody UsersDTO usersDTO
 			) {
-		Users  usersDB = null;
+		
+		Users  usersDB = new Users();
+		
 		if(usersDTO.getId() == null){
+			
+			
 			usersDB =Users.builder()
 					.username(usersDTO.getUsername())
 					.password(crearPassword(usersDTO.getPassword()) )
-					//.roles(null )                                        //convertir(usersDTO.getUsers_id(),usersDTO.getRoles_id()   ) )   
+					//.roles((convertir2(usersDTO.getId(),usersDB)   ) )   
 			        .build() ;
 			
-		
-		System.out.println(usersDB.toString());
+		//System.out.println(usersDB.toString());
 		
 		try {
-			this.userService.save(usersDB);
+			usersDB = this.userService.save(usersDB, usersDTO);
 			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -102,13 +110,18 @@ public class UsersResource {
 			
 		}else {
 	  
-			
-			usersDB = this.userService.obtenerUsersPorId(usersDTO.getId());
+			try {
+				usersDB = this.userService.obtenerUsersPorId(usersDTO.getId());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		
 	
 		}
-	     
+	
 		
-		return ResponseEntity.status(HttpStatus.CREATED).body(usersDB);
+		
+		return ResponseEntity.status(HttpStatus.CREATED).body(usersDB );
 
 		
 	}
@@ -163,7 +176,7 @@ public class UsersResource {
 	
 	
 	//traer todos los users
-	@GetMapping(value="/user",produces = "application/json")
+	@GetMapping(value="/users",produces = "application/json")
 	public ResponseEntity<List<Users>> findAll() {
 		//POST: 200 > OK
 		return ResponseEntity.ok(this.userService.findAll());
@@ -189,6 +202,27 @@ public class UsersResource {
 				RolesUsersId.setRole(UsersId);
 						
 				roles.add(r);
+				roles.add(RolesUsersId);
+		
+				System.out.println("set de roles"+roles);
+			return roles;
+		}
+	
+	//metodo para setear roles, lo uso en crear users
+	public static Set<Roles> convertir2(Long RolesId,Users usersDB){
+		
+		  	Set<Roles> roles = new HashSet<>() ;
+			Roles uId = new Roles();
+			Roles RolesUsersId = new Roles();
+				
+			
+			
+			    uId.setId(usersDB.getId());
+			// el usersDB.getId es null
+				
+				RolesUsersId.setRole(RolesId.toString());
+						
+				roles.add(uId);
 				roles.add(RolesUsersId);
 		
 				System.out.println("set de roles"+roles);

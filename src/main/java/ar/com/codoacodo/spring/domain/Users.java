@@ -13,6 +13,9 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -38,7 +41,7 @@ public class Users {
 	@Column(name="password",nullable = false)
 	private String password;
 	
-	
+	@NotFound(action = NotFoundAction.IGNORE)
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(
 		name="users_roles",
