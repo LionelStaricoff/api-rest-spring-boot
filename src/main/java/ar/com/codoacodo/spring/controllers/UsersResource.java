@@ -51,14 +51,20 @@ public class UsersResource {
 		UsersDTO dto = null;
 		if(!users.isEmpty()) {
 			
-			Set<String> rolesStrs = users.get().getRoles()
+		//	Set<Roles> rolesStrs =users.get().getRoles();
+					
+				
+			/*
+					users.get(new Roles ())
+					
+					.getRoles()
 					.stream()
 					.map(r -> "ROLE_"+r.getRole())
 					.collect(Collectors.toSet());
-			
+			*/
 			dto = UsersDTO.builder()
 					.username(users.get().getUsername())
-					.roles(rolesStrs)
+					.roles(users.get().getRoles())
 					.build();			
 		}
 		return dto;
@@ -83,22 +89,27 @@ public class UsersResource {
 			//@Valid
 			@RequestBody UsersDTO usersDTO
 			) {
-		
 		Users  usersDB = new Users();
 		
+		
 		if(usersDTO.getId() == null){
-			
+		   
+
+         
+		  
+           
 			
 			usersDB =Users.builder()
 					.username(usersDTO.getUsername())
 					.password(crearPassword(usersDTO.getPassword()) )
-					//.roles((convertir2(usersDTO.getId(),usersDB)   ) )   
+					.roles(usersDTO.getRoles() )   
 			        .build() ;
-			
-		//System.out.println(usersDB.toString());
 		
+			
 		try {
-			usersDB = this.userService.save(usersDB, usersDTO);
+			
+			usersDB = this.userService.save(usersDB);
+		
 			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -122,6 +133,8 @@ public class UsersResource {
 		
 		
 		return ResponseEntity.status(HttpStatus.CREATED).body(usersDB );
+		
+		
 
 		
 	}
@@ -228,7 +241,17 @@ public class UsersResource {
 				System.out.println("set de roles"+roles);
 			return roles;
 		}
-	}
-
 	
+	/*
+	public Roles buscarRoles(UsersDTO usersDTO, Users  usersDB) {
+	Roles RolesUsersId = new Roles();
+	var res = new HashMap<String, String>();
+	res.put(usersDB.getId().toString(), usersDTO.getRoles().iterator().next());
+			RolesUsersId.setRole(res.toString());
+		return	RolesUsersId;
+	}
+	
+
+	*/
+}
 

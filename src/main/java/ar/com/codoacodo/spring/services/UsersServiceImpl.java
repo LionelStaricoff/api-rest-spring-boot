@@ -70,7 +70,8 @@ public class UsersServiceImpl implements UsersService{
 		Users u = Users.builder().id(ou.getId())
 				.password(ou.getPassword())
 				.username(ou.getUsername())
-				.roles(ou.getRoles()==null? convertir2( ou.getId(), usersDTO.getRoles_id()) : ou.getRoles())
+				.roles(ou.getRoles())
+				//.roles(ou.getRoles()==null? convertir2( ou.getId(), usersDTO.getRoles()) : ou.getRoles())
 				.build();
 		
 		
@@ -134,7 +135,8 @@ public class UsersServiceImpl implements UsersService{
 			}
 					
 			//roles.agregar(uId,RolesUsersId);
-			roles.add(RolesUsersId.toString().equals(res)? RolesUsersId: RolesUsersId.agregarRoles(RolesId, usersDB.toString() ) );
+			roles.add(RolesUsersId.toString().equals(res)? 
+		RolesUsersId: RolesUsersId.agregarRoles(RolesId, usersDB.toString() ) );
 	
 			System.out.println("set de roles"+roles);
 		return roles;

@@ -49,4 +49,8 @@ public class Users {
 		inverseJoinColumns = @JoinColumn(name="roles_id")
 	)
 	private Set<Roles> roles;
+	
+	public void ponerRol(Roles r) {
+		roles.add(r);
+	}
 }
