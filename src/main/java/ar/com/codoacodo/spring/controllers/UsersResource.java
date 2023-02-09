@@ -30,10 +30,10 @@ import ar.com.codoacodo.spring.services.UsersService;
 
 @RestController
 public class UsersResource {
-	/*
-	List<Roles> roles =
-            Stream.of(new Roles(1l, "guess"),
-            		new Roles(1l, "guess")).collect(Collectors.toList()); */
+//	
+//	List<Roles> roles =
+//            Stream.of(new Roles(1l, "guess"),
+//            		new Roles(1l, "guess")).collect(Collectors.toList()); 
 	
 	//inyectamos el servicio de usuario
 	@Autowired
@@ -50,18 +50,6 @@ public class UsersResource {
 		
 		UsersDTO dto = null;
 		if(!users.isEmpty()) {
-			
-		//	Set<Roles> rolesStrs =users.get().getRoles();
-					
-				
-			/*
-					users.get(new Roles ())
-					
-					.getRoles()
-					.stream()
-					.map(r -> "ROLE_"+r.getRole())
-					.collect(Collectors.toSet());
-			*/
 			dto = UsersDTO.builder()
 					.username(users.get().getUsername())
 					.roles(users.get().getRoles())
